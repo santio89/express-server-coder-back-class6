@@ -1,0 +1,1 @@
+[{"title":"productoA","price":100,"thumbnail":"urlA","id":1},{"title":"productoB","price":200,"thumbnail":"urlB","id":2},{"title":"productoC","price":300,"thumbnail":"urlC","id":3}]
