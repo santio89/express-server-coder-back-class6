@@ -45,7 +45,7 @@ class Contenedor {
     async getAll() {
         try {
             const data = JSON.parse(await fs.promises.readFile(this.archivo, "utf-8"));
-            return (data ? console.log(data) : "El archivo está vacío o tiene un problema");
+            return (data ? data : "El archivo está vacío o tiene un problema");
         } catch (error) {
             console.log("Error buscando objetos del archivo. Code: ", error)
         }
@@ -72,58 +72,38 @@ class Contenedor {
     }
 }
 
-
-/* 
-HTTP
-const http = require('http');
-const puerto = 8080;
-
-const server = http.createServer((req, res) => {
-    console.log("llego una peticion"); 
-    const hora = new Date().getHours();
-    const minutos = new Date().getMinutes();
-    res.end(`bienvenido a nuestro servidor http\n${hora}:${minutos}hs`)
-})
-
-server.listen(puerto, ()=>{
-    console.log(`servidor escuchando puerto: ${puerto}`)
-}) */
-
+const productosFile = new Contenedor("./productos.txt");
 
 const express = require("express");
 const app = express();
 const puerto = 8080;
-let visitas = 0;
+
 
 /* middleware */
 app.use((req, res, next)=>{
-    visitas++;
     next();
 })
 /* fin middleware */
 
 app.get('/', (req, res)=>{
-    res.send("<h1 style=color:blue>Bienvenidos al servidor express</h1>")
-
+    res.send("<h1 style=color:blue>EXPRESS SERVER</h1>")
 })
 
-app.get('/user', (req, res)=>{
-    res.send("hola soy user")
+app.get('/productos', (req, res)=>{
+    const productos = productosFile.getAll();
+    productos.then(productos=>res.json(productos))
 })
 
-app.get('/user/:id/:nombre', (req, res)=>{
-    const {id, nombre} = req.params;
-    res.send("hola soy user. id:"+id+" nombre: "+nombre)
+app.get('/productoRandom', (req, res)=>{
+    const productos = productosFile.getAll();
+    let producto = {};
+    productos.then(productos=>{
+        const rand = Math.floor(Math.random() * productos.length);
+        producto = productos[rand];
+        res.json(producto);
+    })
 })
 
-app.get('/visitas', (req, res)=>{
-    res.send(`visitas: ${visitas}`)
-})
-
-app.get('/fyh', (req, res)=>{
-    const date = new Date().toLocaleString();
-    res.send(`fyh: ${date}`)
-})
 
 app.listen(puerto, (err)=>{
     if(!err){

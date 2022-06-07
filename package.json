@@ -113,10 +113,19 @@
     "yallist": "^4.0.0"
   },
   "scripts": {
-    "start": "node ./index.js"
+    "start": "node ./index.js",
+    "devStart": "nodemon ./index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/santio89/express-server-coder-back-class6.git"
+  },
+  "bugs": {
+    "url": "https://github.com/santio89/express-server-coder-back-class6/issues"
+  },
+  "homepage": "https://github.com/santio89/express-server-coder-back-class6#readme",
   "description": ""
 }
